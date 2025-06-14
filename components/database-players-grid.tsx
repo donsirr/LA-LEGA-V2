@@ -134,17 +134,24 @@ export default function DatabasePlayersGrid() {
                 {team.name}
               </Button>
             ))} */}
-            {teams.slice(0, 16).map((team) => (
-              <Button
-                key={team.id}
-                variant={selectedTeam === team.name ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedTeam(team.name)}
-                className={selectedTeam === team.name ? "bg-red-600 hover:bg-red-700" : "bg-gray-700 hover:bg-gray-600"}
-              >
-                {team.name}
-              </Button>
-            ))}
+            {teams
+              .filter((team) => team.id >= 1 && team.id <= 16)
+              .map((team) => (
+                <Button
+                  key={team.id}
+                  variant={selectedTeam === team.name ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedTeam(team.name)}
+                  className={
+                    selectedTeam === team.name
+                      ? "bg-red-600 hover:bg-red-700"
+                      : "bg-gray-700 hover:bg-gray-600"
+                  }
+                >
+                  {team.name}
+                </Button>
+              ))}
+
           </div>
         </div>
       </div>
