@@ -1,12 +1,10 @@
 import NewsGrid from "@/components/news-grid"
 import FeaturedNews from "@/components/featured-news"
 import Header from "@/components/header"
-import CompetitionBadges from "@/components/competition-badges"
 
 export default function NewsPage() {
   return (
     <div className="min-h-screen bg-gray-900">
-      <CompetitionBadges />
       <Header />
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
