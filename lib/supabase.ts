@@ -48,7 +48,6 @@ export interface TeamPerformance {
   result: string
   points_scored: number
   points_conceded: number
-  home_away: string
   created_at: string
 }
 
