@@ -175,7 +175,9 @@ export async function getFeaturedPlayers(): Promise<Player[]> {
       team:teams(*),
       stats:player_stats(*)
     `)
-    .limit(8)
+    .not("category", "is", null)
+    .neq("category", "")
+    .limit(16)
     .order("id")
 
   if (error) {
