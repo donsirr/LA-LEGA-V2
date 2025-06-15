@@ -176,7 +176,7 @@ export default function DatabaseTeamRoster({ teamId }: DatabaseTeamRosterProps) 
                       <p className="text-gray-300 text-sm mb-2">{player.position}</p>
                       <div className="flex items-center justify-between text-xs text-gray-400">
                         {/* <span>{player.age} years</span> */}
-                        <span>{player.height}</span>
+                        <span>{player.nationality}</span>
                       </div>
                     </div>
                   </div>
