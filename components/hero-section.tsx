@@ -16,7 +16,7 @@ export default function HeroSection() {
     {
       title: "LA LEGA - Road to Greatness Awaits.",
       badge: "ASIA Cup",
-      image: "/cover3.jpg",
+      image: "/cover3.png",
     },
     {
       title: "LA LEGA - Welcomes Europe Division!",
