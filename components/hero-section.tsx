@@ -11,7 +11,7 @@ export default function HeroSection() {
     {
       title: "LA LEGA - Welcome to the New Era.",
       badge: "LEAGUE",
-      image: "https://media.discordapp.net/attachments/1372237334363246673/1377216167491539005/cover_s2.png?ex=684d4001&is=684bee81&hm=286dddfc2aaed00780416eb9c9f6837bf4927a9067787efec6c70358997b7fb2&=&format=webp&quality=lossless",
+      image: "/cover1.png",
     },
     {
       title: "LA LEGA - Road to Greatness Awaits.",
