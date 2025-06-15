@@ -21,8 +21,8 @@ export default function DatabaseRankingsTable() {
   const [displayTeams, setDisplayTeams] = useState<TeamWithPerformance[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedLeague, setSelectedLeague] = useState<string>("all")
-  const [sortField, setSortField] = useState<SortField>("ranking")
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
+  const [sortField, setSortField] = useState<SortField>("points")
+  const [sortDirection, setSortDirection] = useState<SortDirection>("desc")
 
   useEffect(() => {
     async function loadRankings() {
@@ -147,16 +147,18 @@ export default function DatabaseRankingsTable() {
   }
 
   // Group teams by league for display
-  const teamsByLeague = displayTeams.reduce(
-    (acc, team) => {
-      if (!acc[team.league]) {
-        acc[team.league] = []
-      }
-      acc[team.league].push(team)
-      return acc
-    },
-    {} as Record<string, TeamWithPerformance[]>,
-  )
+  const teamsByLeague = allTeams.reduce((acc, team) => {
+    if (!acc[team.league]) acc[team.league] = []
+    acc[team.league].push(team)
+    return acc
+  }, {} as Record<string, TeamWithPerformance[]>)
+
+  Object.values(teamsByLeague).forEach((teams) => {
+    teams.sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
+  })
+
+  const filteredLeagues =
+    selectedLeague === "all" ? Object.entries(teamsByLeague) : [[selectedLeague, teamsByLeague[selectedLeague] || []]]
 
   if (loading) {
     return (
@@ -219,150 +221,158 @@ export default function DatabaseRankingsTable() {
         </p>
       </div>
 
-      {/* Single Rankings Table */}
-      <div className="bg-gray-800 rounded-lg overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-gray-700">
-                <th
-                  className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-600 transition-colors"
-                  onClick={() => handleSort("ranking")}
-                >
-                  <div className="flex items-center">
-                    <span>Rank</span>
-                    {getSortIcon("ranking")}
-                  </div>
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Team</th>
-                <th
-                  className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-600 transition-colors"
-                  onClick={() => handleSort("points")}
-                >
-                  <div className="flex items-center justify-center">
-                    <span>Points</span>
-                    {getSortIcon("points")}
-                  </div>
-                </th>
-                <th
-                  className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-600 transition-colors"
-                  onClick={() => handleSort("wins")}
-                >
-                  <div className="flex items-center justify-center">
-                    <span>W</span>
-                    {getSortIcon("wins")}
-                  </div>
-                </th>
-                <th
-                  className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-600 transition-colors"
-                  onClick={() => handleSort("losses")}
-                >
-                  <div className="flex items-center justify-center">
-                    <span>L</span>
-                    {getSortIcon("losses")}
-                  </div>
-                </th>
-                <th
-                  className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-600 transition-colors"
-                  onClick={() => handleSort("winPercentage")}
-                >
-                  <div className="flex items-center justify-center">
-                    <span>Win %</span>
-                    {getSortIcon("winPercentage")}
-                  </div>
-                </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Trend
-                </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Last 5
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-700">
-              {displayTeams.map((team, index) => {
-                const winPercentage = team.winPercentage?.toFixed(1) || "0.0"
-                const points = team.points || 0
-
-                return (
-                  <tr key={team.id} className="hover:bg-gray-750 transition-colors">
-                    <td className="px-4 py-4 whitespace-nowrap">
+      {/* Multi-League Tables */}
+      {filteredLeagues.map(([leagueName, teams]) => (
+        <div key={leagueName} className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4">{leagueName}</h2>
+          <div className="bg-gray-800 rounded-lg overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-gray-700">
+                    <th
+                      className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-600 transition-colors"
+                      onClick={() => handleSort("ranking")}
+                    >
                       <div className="flex items-center">
-                        <span className="font-bold text-white text-lg">{index + 1}</span>
-                        {index + 1 <= 3 && (
-                          <Trophy
-                            className={`ml-2 h-4 w-4 ${index + 1 === 1 ? "text-yellow-500" : index + 1 === 2 ? "text-gray-400" : "text-amber-700"
-                              }`}
-                          />
-                        )}
+                        <span>Rank</span>
+                        {getSortIcon("ranking")}
                       </div>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <Link
-                        href={`/teams/${team.id}`}
-                        className="flex items-center hover:opacity-80 transition-opacity"
-                      >
-                        <div
-                          className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3"
-                        >
-                          <img src={team.image_url}></img>
-                        </div>
-                        <div>
-                          <div className="font-medium text-white">{team.name}</div>
-                          <div className="text-gray-400 text-xs">
-                            {team.city} • {team.league}
-                          </div>
-                        </div>
-                      </Link>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center">
-                      <span className="font-bold text-white text-lg">{points}</span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center">
-                      <span className="text-green-500 font-semibold">{team.wins}</span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center">
-                      <span className="text-red-500 font-semibold">{team.losses}</span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center">
-                      <span className="text-white font-semibold">{winPercentage}%</span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center">
-                      <div className="flex items-center justify-center">{getTrendIcon(team)}</div>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <div className="flex justify-center space-x-1">
-                        {team.recentForm?.slice(0, 5).map((match, matchIndex) => (
-                          <div
-                            key={matchIndex}
-                            className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${match.result === "W"
-                                ? "bg-green-600 text-white"
-                                : match.result === "L"
-                                  ? "bg-red-600 text-white"
-                                  : "bg-gray-600 text-white"
-                              }`}
-                            title={`vs Team ${match.opponent_id}: ${match.points_scored}-${match.points_conceded}`}
-                          >
-                            {match.result}
-                          </div>
-                        )) ||
-                          Array.from({ length: 5 }, (_, formIndex) => (
-                            <div
-                              key={formIndex}
-                              className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold bg-gray-600 text-white"
-                            >
-                              -
-                            </div>
-                          ))}
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Team</th>
+                    <th
+                      className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-600 transition-colors"
+                      onClick={() => handleSort("points")}
+                    >
+                      <div className="flex items-center justify-center">
+                        <span>Points</span>
+                        {getSortIcon("points")}
                       </div>
-                    </td>
+                    </th>
+                    <th
+                      className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-600 transition-colors"
+                      onClick={() => handleSort("wins")}
+                    >
+                      <div className="flex items-center justify-center">
+                        <span>W</span>
+                        {getSortIcon("wins")}
+                      </div>
+                    </th>
+                    <th
+                      className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-600 transition-colors"
+                      onClick={() => handleSort("losses")}
+                    >
+                      <div className="flex items-center justify-center">
+                        <span>L</span>
+                        {getSortIcon("losses")}
+                      </div>
+                    </th>
+                    <th
+                      className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-600 transition-colors"
+                      onClick={() => handleSort("winPercentage")}
+                    >
+                      <div className="flex items-center justify-center">
+                        <span>Win %</span>
+                        {getSortIcon("winPercentage")}
+                      </div>
+                    </th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">
+                      Trend
+                    </th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">
+                      Last 5
+                    </th>
                   </tr>
-                )
-              })}
-            </tbody>
-          </table>
+                </thead>
+                <tbody className="divide-y divide-gray-700">
+                  {teams.map((team, index) => {
+                    const winPercentage = team.winPercentage?.toFixed(1) || "0.0"
+                    const points = team.points || 0
+
+                    return (
+                      <tr key={team.id} className="hover:bg-gray-750 transition-colors">
+                        <td className="px-4 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <span className="font-bold text-white text-lg">{index + 1}</span>
+                            {index + 1 <= 3 && (
+                              <Trophy
+                                className={`ml-2 h-4 w-4 ${index + 1 === 1
+                                  ? "text-yellow-500"
+                                  : index + 1 === 2
+                                    ? "text-gray-400"
+                                    : "text-amber-700"
+                                  }`}
+                              />
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap">
+                          <Link
+                            href={`/teams/${team.id}`}
+                            className="flex items-center hover:opacity-80 transition-opacity"
+                          >
+                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                              <img src={team.image_url} />
+                            </div>
+                            <div>
+                              <div className="font-medium text-white">{team.name}</div>
+                              <div className="text-gray-400 text-xs">
+                                {team.city} • {team.league}
+                              </div>
+                            </div>
+                          </Link>
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-center">
+                          <span className="font-bold text-white text-lg">{points}</span>
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-center">
+                          <span className="text-green-500 font-semibold">{team.wins}</span>
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-center">
+                          <span className="text-red-500 font-semibold">{team.losses}</span>
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-center">
+                          <span className="text-white font-semibold">{winPercentage}%</span>
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-center">
+                          <div className="flex items-center justify-center">{getTrendIcon(team)}</div>
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap">
+                          <div className="flex justify-center space-x-1">
+                            {team.recentForm?.slice(0, 5).map((match, matchIndex) => (
+                              <div
+                                key={matchIndex}
+                                className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${match.result === "W"
+                                  ? "bg-green-600 text-white"
+                                  : match.result === "L"
+                                    ? "bg-red-600 text-white"
+                                    : "bg-gray-600 text-white"
+                                  }`}
+                                title={`vs Team ${match.opponent_id}: ${match.points_scored}-${match.points_conceded}`}
+                              >
+                                {match.result}
+                              </div>
+                            )) ||
+                              Array.from({ length: 5 }, (_, formIndex) => (
+                                <div
+                                  key={formIndex}
+                                  className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold bg-gray-600 text-white"
+                                >
+                                  -
+                                </div>
+                              ))}
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-      </div>
+      ))}
+
 
       {displayTeams.length === 0 && (
         <div className="text-center py-12">
