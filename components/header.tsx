@@ -34,7 +34,7 @@ export default function Header() {
             <Link href="/" className="text-white font-bold text-2xl">
               <div className="w-12 h-12 bg-black-600 rounded-lg flex items-center justify-center hover:bg-red-900 transition-colors">
                 <span className="text-white font-bold text-xl">
-                <img src="https://media.discordapp.net/attachments/1378750702159134750/1382949414879887482/NEWLOGO.png?ex=684d0382&is=684bb202&hm=be6abe9f4f8056a2f1986cff594115a116ad25a6250f58a901acda06e91c6e18&=&format=webp&quality=lossless"></img>
+                <img src="/NEWLOGO.png"></img>
                 </span>
               </div>
             </Link>
