@@ -1,18 +1,44 @@
+/*
+ * Global CSS for responsive design with Tailwind CSS.
+ * This file sets up basic font styles, text wrapping, and defines CSS variables
+ * for light and dark themes. It also includes Tailwind's base, components,
+ * and utilities, which are essential for building responsive layouts.
+ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Base body styles.
+ * Sets the default font family for the entire document.
+ */
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/*
+ * Utility layer for custom utilities.
+ * Defines a utility class `text-balance` for balanced text wrapping.
+ */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
 
+/*
+ * Base layer for CSS variables and global styles.
+ * Defines color palettes and other design tokens for light and dark themes.
+ * These variables are used by Tailwind CSS and custom components.
+ */
 @layer base {
+  /*
+   * Light theme variables.
+   * These HSL values define the color scheme for backgrounds, foregrounds,
+   * cards, popovers, primary/secondary colors, muted, accent, destructive states,
+   * borders, inputs, rings, chart colors, and sidebar specific colors.
+   */
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
@@ -48,6 +74,12 @@ body {
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  /*
+   * Dark theme variables.
+   * These HSL values override the light theme variables when the `dark` class
+   * is applied to the HTML element, providing a dark mode experience.
+   */
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -84,6 +116,10 @@ body {
   }
 }
 
+/*
+ * Apply global border and text/background colors using the defined CSS variables.
+ * This ensures consistency across the application based on the active theme.
+ */
 @layer base {
   * {
     @apply border-border;
