@@ -16,7 +16,7 @@ export default function HeroSection() {
     {
       title: "LA LEGA - Road to Greatness Awaits.",
       badge: "ASIA Cup",
-      image: "https://media.discordapp.net/attachments/1342067436945539084/1378578986065727528/j44ron_gfx.png?ex=684cef3b&is=684b9dbb&hm=ca01d1e6fc9fd9301bf5fe5501c9569970c5f53a47a48269e7b95d533c0f0d24&=&format=webp&quality=lossless",
+      image: "https://media.discordapp.net/attachments/1342067436945539084/1378285222063374346/photo_2025-05-31_15-27-08.jpg?ex=684f2964&is=684dd7e4&hm=60f13c48175555f7689fb96c3a4d0016d36cdc429d7f5392207afeb4276cc666&=&format=webp&quality=lossless",
     },
     {
       title: "LA LEGA - Welcomes Europe Division!",
