@@ -10,18 +10,18 @@ export default function HeroSection() {
   const slides = [
     {
       title: "LA LEGA - Welcome to the New Era.",
-      badge: "CONTINENTAL Cup",
+      badge: "LEAGUE",
       image: "https://media.discordapp.net/attachments/1372237334363246673/1377216167491539005/cover_s2.png?ex=684d4001&is=684bee81&hm=286dddfc2aaed00780416eb9c9f6837bf4927a9067787efec6c70358997b7fb2&=&format=webp&quality=lossless",
     },
     {
       title: "LA LEGA - Road to Greatness Awaits.",
       badge: "ASIA Cup",
-      image: "/cover2.jpg",
+      image: "/cover3.jpg",
     },
     {
       title: "LA LEGA - Welcomes Europe Division!",
       badge: "EUROPA Cup",
-      image: "https://media.discordapp.net/attachments/1342067436945539084/1378666608599236608/DRAGONSOFTHEREDSUN.png?ex=684d40d5&is=684bef55&hm=f6e4625aa3c5e523a04e60107a5950a9073bfefaa03b08782caa16fa8bb49ed8&=&format=webp&quality=lossless&",
+      image: "/cover2.jpg",
     },
   ]
 
