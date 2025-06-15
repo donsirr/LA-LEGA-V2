@@ -1,16 +1,24 @@
 import { supabase } from "./supabase"
 import type { Team, Player, PlayerRanking, Match, MatchStatistics, SetScore, TeamPerformance } from "./supabase"
+import type { TeamWithCount } from "@/lib/supabase"
 
 // Teams
-export async function getTeams(): Promise<Team[]> {
-  const { data, error } = await supabase.from("teams").select("*").order("ranking")
+export async function getTeams(): Promise<TeamWithCount[]> {
+  const { data, error } = await supabase
+    .from("teams")
+    .select("*, players(count)")
 
   if (error) {
     console.error("Error fetching teams:", error)
     return []
   }
 
-  return data || []
+  const teamsWithCounts = data.map((team: any) => ({
+    ...team,
+    player_count: team.players?.[0]?.count ?? 0,
+  }))
+
+  return teamsWithCounts
 }
 
 export async function getTeamById(id: string): Promise<Team | null> {

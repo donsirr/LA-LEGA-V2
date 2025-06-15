@@ -136,6 +136,7 @@ export default function DatabasePlayersGrid() {
             ))} */}
             {teams
               // .filter((team) => team.id >= 1 && team.id <= 16)
+              .filter((team) => team.league === "ASIA Cup" || team.league === "EUROPA Cup")
               .map((team) => (
                 <Button
                   key={team.id}

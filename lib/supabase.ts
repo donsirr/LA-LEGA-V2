@@ -21,6 +21,10 @@ export interface Team {
   statistics?: TeamStatistics[]
 }
 
+export interface TeamWithCount extends Team {
+  player_count?: number
+}
+
 export interface TeamStatistics {
   id: number
   team_id: number

@@ -5,11 +5,11 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { getTeams } from "@/lib/database"
-import type { Team } from "@/lib/supabase"
-import { Users, Trophy, MapPin, Loader2, Filter } from "lucide-react"
+import type {  TeamWithCount } from "@/lib/supabase"
+import { Users, Trophy, Loader2, Filter } from "lucide-react"
 
 export default function DatabaseTeamsGrid() {
-  const [teams, setTeams] = useState<Team[]>([])
+  const [teams, setTeams] = useState<TeamWithCount[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedLeague, setSelectedLeague] = useState<string>("all")
 
@@ -118,7 +118,7 @@ export default function DatabaseTeamsGrid() {
                     <div className="flex items-center justify-center mb-1">
                       <Users className="w-4 h-4 text-gray-400" />
                     </div>
-                    <div className="text-white font-bold">16</div>
+                    <div className="text-white font-bold">{team.player_count ?? 0}</div>
                     <div className="text-gray-400 text-xs">Players</div>
                   </div>
                   <div className="text-center">
