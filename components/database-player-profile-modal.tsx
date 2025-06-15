@@ -87,7 +87,7 @@ export default function DatabasePlayerProfileModal({
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-400">Region:</span>
-                  <span className="font-semibold">{player.age || "N/A"}</span>
+                  <span className="font-semibold">{player.region || "N/A"}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-400">Category:</span>

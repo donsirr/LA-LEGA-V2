@@ -13,7 +13,7 @@ export async function getTeams(): Promise<Team[]> {
   return data || []
 }
 
-export async function getTeamById(id: number): Promise<Team | null> {
+export async function getTeamById(id: string): Promise<Team | null> {
   const { data, error } = await supabase.from("teams").select("*").eq("id", id).single()
 
   if (error) {
@@ -109,7 +109,7 @@ export async function getPlayers(): Promise<Player[]> {
   return data || []
 }
 
-export async function getPlayersByTeam(teamId: number): Promise<Player[]> {
+export async function getPlayersByTeam(teamId: string): Promise<Player[]> {
   const { data, error } = await supabase
     .from("players")
     .select(`
@@ -263,7 +263,7 @@ export async function getMatches(): Promise<Match[]> {
       statistics:match_statistics(*),
       set_scores(*)
     `)
-    .order("match_date")
+    .order("id")
 
   if (error) {
     console.error("Error fetching matches:", error)
@@ -273,7 +273,7 @@ export async function getMatches(): Promise<Match[]> {
   return data || []
 }
 
-export async function getMatchById(id: number): Promise<Match | null> {
+export async function getMatchById(id: string): Promise<Match | null> {
   const { data, error } = await supabase
     .from("matches")
     .select(`
@@ -294,7 +294,7 @@ export async function getMatchById(id: number): Promise<Match | null> {
   return data
 }
 
-export async function getMatchesByTeam(teamId: number): Promise<Match[]> {
+export async function getMatchesByTeam(teamId: string): Promise<Match[]> {
   const { data, error } = await supabase
     .from("matches")
     .select(`

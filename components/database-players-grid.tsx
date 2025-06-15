@@ -135,7 +135,7 @@ export default function DatabasePlayersGrid() {
               </Button>
             ))} */}
             {teams
-              .filter((team) => team.id >= 1 && team.id <= 16)
+              // .filter((team) => team.id >= 1 && team.id <= 16)
               .map((team) => (
                 <Button
                   key={team.id}

@@ -7,13 +7,12 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Database types matching your schema
 export interface Team {
-  id: number
+  id: string
   name: string
   image_url: string
   city: string
   league: string
   primary_color: string
-  secondary_color: string
   wins: number
   losses: number
   championships: number
@@ -108,7 +107,7 @@ export interface PlayerRanking {
 }
 
 export interface MatchStatistics {
-  id: number
+  id: string
   match_id: number
   team_id: number
   total_points: number
@@ -133,7 +132,7 @@ export interface SetScore {
 }
 
 export interface Match {
-  id: number
+  id: string
   home_team_id: number
   away_team_id: number
   home_team_image_url: string

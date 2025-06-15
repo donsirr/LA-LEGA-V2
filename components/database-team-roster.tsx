@@ -25,8 +25,8 @@ export default function DatabaseTeamRoster({ teamId }: DatabaseTeamRosterProps) 
     async function loadTeamData() {
       setLoading(true)
       const [teamData, playersData] = await Promise.all([
-        getTeamById(Number.parseInt(teamId)),
-        getPlayersByTeam(Number.parseInt(teamId)),
+        getTeamById(teamId),
+        getPlayersByTeam(teamId),
       ])
       setTeam(teamData)
       setPlayers(playersData)

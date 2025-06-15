@@ -68,23 +68,6 @@ export default function DatabasePlayerRankings() {
       filtered = filtered.filter((r) => r.player?.nationality === selectedNationality)
     }
 
-    // Age filter
-    if (ageFilter !== "all") {
-      filtered = filtered.filter((r) => {
-        const age = r.player?.age || 0
-        switch (ageFilter) {
-          case "young":
-            return age < 25
-          case "prime":
-            return age >= 25 && age <= 30
-          case "veteran":
-            return age > 30
-          default:
-            return true
-        }
-      })
-    }
-
     // Search filter
     if (searchQuery) {
       filtered = filtered.filter(
@@ -288,7 +271,7 @@ export default function DatabasePlayerRankings() {
                 <h3 className="text-lg font-bold text-white mb-1">{ranking.player?.name || "Unknown Player"}</h3>
                 <p className="text-gray-400 text-sm">{ranking.player?.team?.name || "Free Agent"}</p>
                 <p className="text-gray-500 text-xs">
-                  {ranking.player?.nationality || "Unknown"} • Region {ranking.player?.age || "N/A"}
+                  {ranking.player?.nationality || "Unknown"} • Region {ranking.player?.region || "N/A"}
                 </p>
               </div>
             </div>
