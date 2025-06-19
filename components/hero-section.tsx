@@ -19,9 +19,9 @@ export default function HeroSection() {
       image: "/cover3.png",
     },
     {
-      title: "LA LEGA - Welcomes Europe Division!",
+      title: "LA LEGA - Europe is coming.",
       badge: "EUROPA Cup",
-      image: "/cover2.jpg",
+      image: "/cover4.png",
     },
   ]
 
