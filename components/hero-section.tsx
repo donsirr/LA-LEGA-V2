@@ -14,9 +14,9 @@ export default function HeroSection() {
       image: "/cover1.png",
     },
     {
-      title: "LA LEGA - Road to Greatness Awaits.",
+      title: "KENY - SEASON 1 MVP.",
       badge: "ASIA Cup",
-      image: "/cover3.png",
+      image: "/KENYMVP.jpg",
     },
     {
       title: "LA LEGA - Europe is coming.",
